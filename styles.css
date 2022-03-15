@@ -1,0 +1,12 @@
+#container {
+    display: grid;
+    grid-template-columns: repeat(16, 40px);
+    gap: 1px;
+  }
+
+.box {
+    width: 40px;
+    height: 40px;
+    border: 0.5px solid ;
+    box-sizing: border-box;
+}
