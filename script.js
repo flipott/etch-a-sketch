@@ -1,39 +1,77 @@
-const container = document.querySelector('#container');
+const container = document.querySelector('#grid-container');
 const clearBtn = document.querySelector('#clear');
 const rainbowBtn = document.querySelector('#rainbow');
 const gridSet = document.querySelector('#grid-set');
-
+let box = document.querySelectorAll('.box');
 
 let rainbowMode = false;
 let gridSize = 16;
+let squareSize = "43.75px"
+
+createGrid()
+colorBox()
 
 //Creates div boxes in DOM based on number
-for (let i = 0; i < gridSize**2; i++) {
-    let gridBox = document.createElement('div');
-    gridBox.classList.add('box');
-    container.appendChild(gridBox);
+function createGrid() {
+    for (let i = 0; i < gridSize**2; i++) {
+        let gridBox = document.createElement('div');
+        gridBox.classList.add('box');
+        gridBox.style.width = squareSize;
+        gridBox.style.height = squareSize;
+        container.appendChild(gridBox);
+
+        container.style.gridTemplateColumns = "repeat(" + gridSize + ", " + squareSize + ")";
+
+        // document.querySelectorAll('.box').forEach(item => {
+        //     item.style.width = squareSize;
+        //     item.style.height = squareSize;
+        // })
+    };
 };
 
-const box = document.querySelectorAll('.box');
+//Removes a grid so a new one can be created
+function removeGrid(parent) {
+    while (parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    };
+};
 
+//Allows boxes to be colored when moused over
+function colorBox() {
+    let box = document.querySelectorAll('.box');
 
-box.forEach(item => {
-    item.addEventListener('mouseover', event => {
-        if (rainbowMode == false) {
-            item.style.backgroundColor = "black"
-        } else {
-            item.style.backgroundColor = colorRandom()
-        };
-    });
-});  
+    box.forEach(item => {
+        item.addEventListener('mouseover', event => {
+            if (rainbowMode == false) {
+                item.style.backgroundColor = "black"
+            } else {
+                item.style.backgroundColor = colorRandom()
+            };
+        });
+    }); 
+} 
 
 gridSet.addEventListener('click', resizeGrid)
 
+//Creates a new grid based on user prompt
 function resizeGrid() {
-    gridSize = prompt("How many squares per side? Pick a number from 1 to 100.")
-    container.style.gridTemplateColumns = "repeat(" + gridSize + ", 40px)"
-}
+    promptResult = prompt("How many squares per side? Pick a number from 2 to 100.")
+    if (promptResult > 1 && promptResult < 101){
+        gridSize = promptResult;
+        removeGrid(container);
+        squareSize = boxCalc(gridSize) + "px";
+        createGrid();
+        colorBox();
+    };
+};
 
+
+function boxCalc(gridSize) {
+    let containerSize = 700*700
+    let divSize = gridSize**2
+    let newSquare = Math.sqrt(containerSize/divSize);
+    return newSquare;
+};
 
 clearBtn.addEventListener('click', resetGrid);
 rainbowBtn.addEventListener('click', colorToggle);
@@ -56,6 +94,8 @@ function colorToggle() {
 
 //Clears grid
 function resetGrid() {
+    let box = document.querySelectorAll('.box');
+
     box.forEach(item => {
         item.style.backgroundColor = null;
 });
