@@ -1,5 +1,13 @@
-# pixelsketch
+# PixelSketch
 
-This webpage allows a user to sketch pixels and resize the grid if so desired. The main layout of the site was created with HTML and CSS, while the grid programming was created with JavaScript and CSS grid. 
+A simple JavaScript app that allows users to draw on a grid. This demonstrates the use of event listeners to change element properties. 
 
-View live page at https://flipott.github.io/pixelsketch/
+Live page viewable here: https://flipott.github.io/pixelsketch/
+
+# Features
+- Draw via mouseover
+- Switch between random color and single color modes
+- Resizable and clearable grid
+
+# Tools Used
+[![My Skills](https://skillicons.dev/icons?i=html,css,js)](https://skillicons.dev)
